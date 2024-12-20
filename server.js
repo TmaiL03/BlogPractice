@@ -12,7 +12,21 @@ app.use("/articles", articleRouter);
 
 app.get("/", (req, res) => {
 
-    res.render("index");
+    const articles = [{
+        title: "This is the first article.",
+        createdAt: new Date(),
+        description: "This is the description of the first article"
+
+    },
+    {
+        title: "This is another article.",
+        createdAt: new Date(),
+        description: "This article features even more info than the last one."
+
+    }];
+
+    // articles/index specifies route to index.ejs file in the views/articles subdirectory.
+    res.render("articles/index", {articles: articles});
 
 });
 
