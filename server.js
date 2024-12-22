@@ -1,14 +1,23 @@
+const PORT = 2525;
+
 const express = require("express");
+const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
 // Requires router from articles.js, allowing server to access article routes.
 const articleRouter = require("./routes/articles");
 
 const app = express();
 
+// Specifying connection string for MongoDB. (Localhost, with /blog denoting the database name within cluster.)
+mongoose.connect("mongodb://localhost/blog");
+
 // Configuring view engine (EJS), which will convert EJS code used for views to HTML.
 app.set("view engine", "ejs");
 
-// Specifies the path of the article router (appends any server routing to "/articles").
-app.use("/articles", articleRouter);
+// Allows elements of article form to be accessible from articles route.
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
 
@@ -30,4 +39,7 @@ app.get("/", (req, res) => {
 
 });
 
-app.listen(2525);
+// Specifies the path of the article router (appends any server routing to "/articles").
+app.use("/articles", articleRouter);
+
+app.listen(PORT);

@@ -13,7 +13,8 @@
         <!-- Specifies the route (/articles) to which the data from the form will be POSTed. -->
         <form action="/articles" method="POST">
             <!-- The percentage-minus tag allows for HTML to be rendered within the tag. Useful for partial fields.-->
-            <%- include("_form_fields") %>
+            <%- include("_form_fields"), { article: article } %>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
 </body>
