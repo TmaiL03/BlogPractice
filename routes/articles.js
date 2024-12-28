@@ -12,15 +12,27 @@ router.get("/new", (req, res) => {
 });
 
 // Gets article at specified id.
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
 
-})
+    // Finds article by ID in the database after saving.
+    const article = await Article.findById(req.params.id);
+
+    // If article is not found, return to home page.
+    if(article == null) {
+
+        res.redirect("/");
+
+    }
+
+    // Displays the newly generated article.
+    res.render("articles/show", { article: article });
+});
 
 // Pulls data from new post form in new.ejs.
 router.post("/", async (req, res) => {
 
     // Creates Article object in accordance with Article schema.
-    const article = new Article({
+    let article = new Article({
         title: req.body.title,
         description: req.body.description,
         markdown: req.body.markdown
